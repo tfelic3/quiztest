@@ -29,7 +29,7 @@ audioSelection: new Audio('images/bidenaudio.m4a')
 const questionTwo ={
  question: "This governor is reopening the state on Friday Arpil 23.",
  imgPath: 'images/kemp.png',
- questionKeys: [{keyOne:"Gov. Edwards"},{keyTwo:"Gov. Kemp"},{keyThree:"Gov Cuomo"}],
+ questionKeys: [{keyOne:"Gov. Edwards"},{keyTwo:"Gov. Kemp"},{keyThree:"Gov Cuomo"},{keyFour:"Gov. Jindal"}],
  correctChoice: "Gov. Kemp",
  audioSelection: new Audio('images/kempaudio.m4a')
 }
@@ -37,7 +37,7 @@ const questionTwo ={
 const questionThree ={
 question: "The novel coronavirus appears to have originated in this animal?",
 imgPath: 'images/coronavirusedit.png',
-questionKeys:[{keyOne: "mouse"},{keyTwo:"donkey"},{keyFour:"bat"}],
+questionKeys:[{keyOne: "mouse"},{keyTwo:"donkey"},{keyThree:"bat"},{keyFour:"Cow"}],
 correctChoice: "bat"
 }
 
@@ -50,7 +50,7 @@ let questionChoices = [questionOne, questionTwo, questionThree];
 let selection =  Math.floor(Math.random()*questionChoices.length);  
 
 select = questionChoices[selection];
-console.log(select.imgPath);
+
 
 let cardOne = document.querySelector('#cardOne');
 let cardImg = document.querySelector('#image');
@@ -71,7 +71,10 @@ cardOne.appendChild(createQuestion);
 
 //Creates button for each question. I want buttons to appear randomly.
 let questionButtons = () =>{
+
+    
     select.questionKeys.forEach(question=>{
+        
         let newButtons = document.createElement('button');
         newButtons.textContent = Object.values(question); 
         cardOne.insertAdjacentElement('afterend', newButtons);
@@ -97,14 +100,21 @@ introFunction();
 
     let buttonHandle = document.querySelectorAll('button');
 
+    let forwardButton = () =>{
+    let continueButton = document.createElement('button');
+    continueButton.style.backgroundColor ="purple";
+        continueButton.textContent = "Continue"; 
+        document.body.insertAdjacentElement('afterend', continueButton);
+    }
 
     buttonHandle.forEach(function(buttons){
         function buttonInfo(e){
             if(e.target.textContent ===select.correctChoice){
                 buttons.style.backgroundColor ="green";   
                 scoreValue.textContent = +1;  
-                select.audioSelection.play();  
-
+                if(select.audioSelection){
+                    select.audioSelection.play()}  
+                  forwardButton();
             } else {
                 buttons.style.backgroundColor = "red";
                 let answer=document.createElement("p");
@@ -113,12 +123,22 @@ introFunction();
                 cardOne.insertAdjacentElement('afterend', answer);
             }
         };
-        buttons.addEventListener('click', buttonInfo);
+        buttons.addEventListener('click', buttonInfo)
     })
+
+
+let newArray = () =>{
+    questionChoices.filter(function(){
+        delete select;
+    })  
+}
+ newArray();
+ console.log(questionChoices);
 };
 
 
-introduction.addEventListener('click',questionSelection);
+introduction.addEventListener('click',questionSelection)
+
 
 
 

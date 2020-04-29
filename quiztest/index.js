@@ -7,6 +7,7 @@ let pageIntro = document.querySelector('#introductory-page');
 //Selecting intro div page. Will delete this later
 
 let score = document.querySelector('#score-container');
+
 let scoreTag = document.querySelector('.score-tag')
 score.style.visibility = "hidden";
 //This creates container for score elements. This will begin as hidden.
@@ -27,7 +28,7 @@ audioSelection: new Audio('images/bidenaudio.m4a')
 }
 
 const questionTwo ={
- question: "This governor is reopening the state on Friday Arpil 23.",
+ question: "This governor is reopening the state on Friday April 23.",
  imgPath: 'images/kemp.png',
  questionKeys: [{keyOne:"Gov. Edwards"},{keyTwo:"Gov. Kemp"},{keyThree:"Gov Cuomo"},{keyFour:"Gov. Jindal"}],
  correctChoice: "Gov. Kemp",
@@ -37,8 +38,8 @@ const questionTwo ={
 const questionThree ={
 question: "The novel coronavirus appears to have originated in this animal?",
 imgPath: 'images/coronavirusedit.png',
-questionKeys:[{keyOne: "mouse"},{keyTwo:"donkey"},{keyThree:"bat"},{keyFour:"Cow"}],
-correctChoice: "bat"
+questionKeys:[{keyOne: "Mouse"},{keyTwo:"Donkey"},{keyThree:"Bat"},{keyFour:"Cow"}],
+correctChoice: "Bat"
 }
 
 //Function for selecting questions in object
@@ -47,9 +48,21 @@ let questionSelection = () =>{
 let select;
 let questionChoices = [questionOne, questionTwo, questionThree];
 
-let selection =  Math.floor(Math.random()*questionChoices.length);  
 
-select = questionChoices[selection];
+function shuffle(){
+    let currentPass = questionChoices.length;
+    let index,temp;
+    while (currentPass>0){
+        index= Math.floor(Math.random()*currentPass);
+        currentPass--;
+        temp = questionChoices[currentPass];
+        questionChoices[currentPass]  = questionChoices[index];
+        questionChoices[index] = temp;
+        select = questionChoices[index];
+    }
+}
+
+shuffle();
 
 
 let cardOne = document.querySelector('#cardOne');
@@ -70,12 +83,14 @@ cardOne.appendChild(myImage);
 cardOne.appendChild(createQuestion);
 
 //Creates button for each question. I want buttons to appear randomly.
+
+let newButtons;
 let questionButtons = () =>{
 
     
     select.questionKeys.forEach(question=>{
         
-        let newButtons = document.createElement('button');
+        newButtons = document.createElement('button');
         newButtons.textContent = Object.values(question); 
         cardOne.insertAdjacentElement('afterend', newButtons);
     });
@@ -100,13 +115,43 @@ introFunction();
 
     let buttonHandle = document.querySelectorAll('button');
 
+
+
+    let nextItem = (question,index,array) =>{
+        nextQuestion = (array[index+1]);
+        myImage.src = nextQuestion.imgPath;
+        createQuestion.textContent = nextQuestion.question;
+        let questionButtons = document.querySelectorAll('button');
+        questionButtons.forEach(button=>button.remove());
+
+    
+
+
+
+    
+    }    
+
     let forwardButton = () =>{
-    let continueButton = document.createElement('button');
-    continueButton.style.backgroundColor ="purple";
-        continueButton.textContent = "Continue"; 
-        document.body.insertAdjacentElement('afterend', continueButton);
+        let continueButton = document.createElement('button');
+        continueButton.style.backgroundColor ="purple";
+            continueButton.textContent = "Continue"; 
+            document.body.insertAdjacentElement('afterend', continueButton);
+
+        continueButton.addEventListener('click', function(){
+        questionChoices.map(nextItem);
+        
+        
+            
+        
+        
+
+        })
     }
 
+
+
+
+   
     buttonHandle.forEach(function(buttons){
         function buttonInfo(e){
             if(e.target.textContent ===select.correctChoice){
@@ -127,6 +172,16 @@ introFunction();
     })
 
 
+};
+
+
+introduction.addEventListener('click',questionSelection);
+
+
+
+
+
+/*
 let newArray = () =>{
     questionChoices.filter(function(){
         delete select;
@@ -136,14 +191,6 @@ let newArray = () =>{
  console.log(questionChoices);
 };
 
-
-introduction.addEventListener('click',questionSelection)
-
-
-
-
-
-/*
 
 let cardOne = document.querySelector('#cardOne');
 let cardImg = document.querySelector('#image');
@@ -215,13 +262,14 @@ buttonHandle.forEach(function(buttons){
 }
 
  ))
-/*
+
+ 
 for(let i =0;i<questionOne.questionKeys.length;i++){
 console.log(questionOne.questionKeys[i]);
 
 }
-*/
-/*
+
+
 buttonHandle.forEach(item=>
     item.addEventListener('click', function(){
         if(Object.keys(questionOne.questionKeys==="Wisconsin"){
@@ -235,10 +283,7 @@ buttonHandle.forEach(item=>
             cardOne.insertAdjacentElement('afterend', answer);
         }
     }))
-*/
 
-
-/*
 correctButton1.addEventListener('click', function(){
     correctButton1.style.backgroundColor= "green";
     scoreValue.textContent = +1;
@@ -257,8 +302,3 @@ otherButton1.addEventListener('click', function(){
 })
 
 */
-
-       
-  
-
-

@@ -136,11 +136,13 @@ console.log(questionButtons)
             } else{
                 button.style.backgroundColor ="red";
                 console.log(questionButtons);
+                forwardButton();
                 for(let i =0;i<questionButtons.length;i++){
                 if(questionButtons[i].textContent ===select.correctChoice){
                     questionButtons[i].style.backgroundColor = "green";
                 } else{
                     questionButtons[i].style.backgroundColor ="red";
+                    
                 }
                   
               }
@@ -148,24 +150,36 @@ console.log(questionButtons)
 
             }
              
-                
+            
             
         }
     button.addEventListener('click',buttonHandler);    
+
+     let forwardButton = () =>{
+        let continueButton = document.createElement('button');
+        continueButton.style.backgroundColor ="purple";
+            continueButton.textContent = "Continue"; 
+            document.body.insertAdjacentElement('afterend', continueButton);
+
+          let forwardButtonHandle = ()=>{
+           for(let i =0;i<questionButtons.length;i++){
+               questionButtons[i].remove();
+           }
+            select = nextIndex;
+            myImage.src = select.imgPath;
+            createQuestion.textContent = select.question;
+            createButtons();
+            console.log(questionButtons)
+            button.addEventListener('click',buttonHandler)
+            
+                         
+          } 
+           
+        continueButton.addEventListener('click',forwardButtonHandle)
         
+
+    }
     }); 
-
-
-    
-     
-
-
-
-
-
-
-
-
 
 
     let answer=document.createElement("p");
@@ -176,37 +190,7 @@ console.log(questionButtons)
     
 
    
- 
-
-    
-
-    
-    
-        let resetState = () =>{
-            buttons.removeEventListener('click', buttonInfo)
-            select.audioSelection.pause();   
-            answer.style.display = "none";           
-        }
-
-
-        let forwardButton = () =>{
-            let continueButton = document.createElement('button');
-            continueButton.style.backgroundColor ="purple";
-                continueButton.textContent = "Continue"; 
-                document.body.insertAdjacentElement('afterend', continueButton);
-    
-              let forwardButtonHandle = ()=>{
-                 resetState();
-                select = nextIndex;
-                myImage.src = select.imgPath;
-                createQuestion.textContent = select.question;
-               continueButton.style.visibility = "hidden";               
-              } 
-               
-            continueButton.addEventListener('click',forwardButtonHandle)
-    
-    
-        }
+        
     
     
     

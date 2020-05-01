@@ -97,13 +97,75 @@ cardOne.appendChild(createQuestion);
 
 
 let newButtons;
-select.questionKeys.forEach(question=>{
+let questionButtons;
+
+let createButtons = () =>{
+    for (let i=0; i<select.questionKeys.length; i++){
+newButtons = document.createElement('button');
+newButtons.id = "questionButtons";
+newButtons.textContent = Object.values(select.questionKeys[i]);
+cardOne.insertAdjacentElement('afterend',newButtons)
+    }
+    questionButtons = document.querySelectorAll("#questionButtons");
+   
+
+}
+
+createButtons();
+
+console.log(questionButtons)
+
+
+
+
+    questionButtons.forEach(function(button){
+        let buttonHandler = (e) =>{
+           
+            
+            if(e.target.textContent === select.correctChoice){
+             button.style.backgroundColor = "green";
+             button.removeAttribute('id');
+             score.style.visibility = "visible";
+             scoreValue.textContent = 1;
+             forwardButton();
+             let buttonValue = document.querySelectorAll("#questionButtons");
+             for(let i=0;i<buttonValue.length;i++){
+                 buttonValue[i].style.backgroundColor = "red";
+             }
+
+            } else{
+                button.style.backgroundColor ="red";
+                console.log(questionButtons);
+                for(let i =0;i<questionButtons.length;i++){
+                if(questionButtons[i].textContent ===select.correctChoice){
+                    questionButtons[i].style.backgroundColor = "green";
+                } else{
+                    questionButtons[i].style.backgroundColor ="red";
+                }
+                  
+              }
+                
+
+            }
+             
+                
+            
+        }
+    button.addEventListener('click',buttonHandler);    
+        
+    }); 
+
+
     
-  newButtons = document.createElement('button');
-  newButtons.id=('questionButtons')
-    newButtons.textContent = Object.values(question); 
-    cardOne.insertAdjacentElement('afterend', newButtons);
-});
+     
+
+
+
+
+
+
+
+
 
 
     let answer=document.createElement("p");
@@ -113,35 +175,12 @@ select.questionKeys.forEach(question=>{
     answer.style.display = "none";
     
 
-    introduction.style.visibility = "hidden";
-    score.style.visibility="visible";
-    pageIntro.remove();
-
-    let buttonHandle = document.querySelectorAll('button');
+   
  
 
     
 
-    let buttonInfo;
-    buttonHandle.forEach(function(buttons){
-        function buttonInfo(e){
-            if(e.target.textContent ===select.correctChoice){
-                buttons.style.backgroundColor ="green";  
-                scoreValue.textContent = +1;  
-                if(select.audioSelection){
-                    select.audioSelection.play()}  
-                    buttons.disabled = true; 
-                  forwardButton();
-                  
-            } else {
-                buttons.style.backgroundColor = "red";
-                if(select.audioSelection){
-                    select.audioSelection.pause()} 
-                    answer.style.display ="block";
-                    buttons.disabled = true; 
-            }
-        };
-        buttons.addEventListener('click', buttonInfo)
+    
     
         let resetState = () =>{
             buttons.removeEventListener('click', buttonInfo)
@@ -171,12 +210,10 @@ select.questionKeys.forEach(question=>{
     
     
     
-    })
-
-
-};
+    }
 
 
 
-introduction.addEventListener('click',questionSelection);
+
+questionSelection();
 

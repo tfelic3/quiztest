@@ -6,18 +6,36 @@ let introduction = document.querySelector('#introduction');
 let pageIntro = document.querySelector('#introductory-page');
 //Selecting intro div page. Will delete this later
 
+let modal = document.querySelector(".modal");
+console.log(modal)
 let score = document.querySelector('#score-container');
 
 let scoreTag = document.querySelector('.score-tag')
 score.style.visibility = "hidden";
 //This creates container for score elements. This will begin as hidden.
 
-let scoreValue = document.createElement('p');
-scoreValue.classList.add('score');
-scoreTag.insertAdjacentElement('beforeend', scoreValue);
+let scoreContainer = document.createElement('p');
+scoreContainer.classList.add('score');
+scoreTag.insertAdjacentElement('beforeend', scoreContainer);
+let scoreValue= 0 ;
+let scoreHandle = () =>{
+score.style.visibility = "visible";
+scoreValue++;
+scoreContainer.textContent = scoreValue;
+if(scoreValue===3){
+ score.style.height= "100vh"; 
+ score.style.width = "100vh";
+ score.style.opacity = ".5";
+ score.style.display ="block";
+ score.border.borderRadius = "none";
+
+}
+}
 
 let currentIndex = 0;
 let select;
+let questionButtons
+
 
 //Objects quiz questions
 const questionOne = {
@@ -62,142 +80,157 @@ function shuffle(){
         questionChoices[index] = temp;
         select = questionChoices[index];
     }
+    
 }
 
 shuffle();
 
-currentIndex = questionChoices.indexOf(select);
-nextQuestion = ++currentIndex;
-nextIndex = questionChoices[nextQuestion];
-
-console.log(select)
-console.log(questionChoices[nextQuestion]);
-console.log(questionChoices)
-
-
-let cardOne = document.querySelector('#cardOne');
-let cardImg = document.querySelector('#image');
-let cardQuestion = document.querySelector('#main-question');
-let button = document.querySelector('#answerChoice');
-//Creates image from each object
-let myImage = document.createElement('img');
-myImage.id=('image');
-myImage.src = select.imgPath;
-
-//Create question from each object selection
-let createQuestion = document.createElement('h3')
-createQuestion.id= 'question1';
-createQuestion.textContent = select.question;
-
-cardOne.appendChild(myImage);
-cardOne.appendChild(createQuestion);
-
-//Creates button for each question. I want buttons to appear randomly.
 
 
 
-let newButtons;
-let questionButtons;
 
-let createButtons = () =>{
-    for (let i=0; i<select.questionKeys.length; i++){
-newButtons = document.createElement('button');
-newButtons.id = "questionButtons";
-newButtons.textContent = Object.values(select.questionKeys[i]);
-cardOne.insertAdjacentElement('afterend',newButtons)
-    }
-    questionButtons = document.querySelectorAll("#questionButtons");
+questionChoices.forEach(question=>{
+    let cardOne = document.createElement('div');
+    cardOne.classList.add("cardDiv")
+    let cardImg = document.querySelector('.image');
+    let cardQuestion = document.querySelector('.main-question');
+    //Creates image from each object
+    let myImage = document.createElement('img');
+    myImage.id=('image');
+    myImage.src = question.imgPath;
+   let createQuestion = document.createElement('h3')
+   createQuestion.id= 'main-question';
+   createQuestion.textContent = question.question;
+   let buttonDiv = document.createElement('div');
+   buttonDiv.classList.add("buttonBox");
+
+   let correctHandle= () =>{
+   let correctDiv = document.createElement("p");
+   correctDiv.textContent= question.correctChoice;
+   correctDiv.style.color ="red";
+   createQuestion.insertAdjacentElement("afterend",correctDiv);
+   }
+   document.body.appendChild(cardOne);
+   cardOne.appendChild(myImage);
+   cardOne.appendChild(createQuestion);
+   createQuestion.insertAdjacentElement("afterend",buttonDiv)
+
    
+   
+
+
+   question.questionKeys.forEach(key=>{
+       questionButtons = document.createElement('button');
+       questionButtons.textContent = Object.values(key);
+       if(questionButtons.textContent===question.correctChoice){
+        questionButtons.id=("answerChoices");   
+       }
+       buttonDiv.appendChild(questionButtons);
+       questionButtons=document.querySelectorAll('button')
+   })
+     
+ 
+   
+     
+})
+
+}
+questionSelection(); 
+
+
+
+let buttonContainer = document.querySelectorAll('.buttonBox')
+
+
+let buttonHandler = (e)=>{
 
 }
 
-createButtons();
 
-console.log(questionButtons)
-
-
-
-
-    questionButtons.forEach(function(button){
-        let buttonHandler = (e) =>{
-           
-            
-            if(e.target.textContent === select.correctChoice){
-             button.style.backgroundColor = "green";
-             button.removeAttribute('id');
-             score.style.visibility = "visible";
-             scoreValue.textContent = 1;
-             forwardButton();
-             let buttonValue = document.querySelectorAll("#questionButtons");
-             for(let i=0;i<buttonValue.length;i++){
-                 buttonValue[i].style.backgroundColor = "red";
-             }
-
-            } else{
-                button.style.backgroundColor ="red";
-                console.log(questionButtons);
-                forwardButton();
-                for(let i =0;i<questionButtons.length;i++){
-                if(questionButtons[i].textContent ===select.correctChoice){
-                    questionButtons[i].style.backgroundColor = "green";
-                } else{
-                    questionButtons[i].style.backgroundColor ="red";
-                    
-                }
-                  
-              }
-                
-
+buttonContainer.forEach(div=>{
+   div.addEventListener('click', function(e){
+    if (e.target.id ==="answerChoices"){
+        e.target.style.backgroundColor ="green";
+       console.log(e);
+        scoreHandle ();
+        e.target.disabled ="true";
+        let correctDiv = document.createElement('p');
+        correctDiv.style.color = "green";
+        correctDiv.style.textAlign ="center";
+        correctDiv.textContent = ("You got it right!");
+        div.insertAdjacentElement("beforebegin",correctDiv);
+        let otherChoices = div.childNodes;
+        otherChoices.forEach(choice=>{choice.disabled = "true";})
+        
+    } else{
+       
+        otherChoices = div.childNodes;
+       for(let i=0; i<otherChoices.length;i++){
+           if(otherChoices[i].id ==="answerChoices"){
+               let correctChoice =otherChoices[i].textContent;
+               let wrongDiv = document.createElement('p');
+               wrongDiv.style.color = "green";
+               wrongDiv.style.textAlign ="center";
+               wrongDiv.textContent = "The correct answer is " + correctChoice;
+           div.insertAdjacentElement("beforebegin",wrongDiv);
             }
-             
-            
-            
-        }
-    button.addEventListener('click',buttonHandler);    
-
-     let forwardButton = () =>{
-        let continueButton = document.createElement('button');
-        continueButton.style.backgroundColor ="purple";
-            continueButton.textContent = "Continue"; 
-            document.body.insertAdjacentElement('afterend', continueButton);
-
-          let forwardButtonHandle = ()=>{
-           for(let i =0;i<questionButtons.length;i++){
-               questionButtons[i].remove();
-           }
-            select = nextIndex;
-            myImage.src = select.imgPath;
-            createQuestion.textContent = select.question;
-            createButtons();
-            console.log(questionButtons)
-            button.addEventListener('click',buttonHandler)
-            
-                         
-          } 
            
-        continueButton.addEventListener('click',forwardButtonHandle)
+        }
+            
+      
         
-
-    }
-    }); 
-
-
-    let answer=document.createElement("p");
-    answer.textContent = "Wrong! The correct choice is " + select.correctChoice;
-    answer.style.color = "red";
-    cardOne.insertAdjacentElement('afterend', answer);
-    answer.style.display = "none";
-    
-
-   
         
-    
-    
-    
+        for(let i=0;i<otherChoices.length;i++){
+            
+        if (otherChoices[i].id !=="answerChoices"){
+            otherChoices[i].style.backgroundColor ="red";
+            otherChoices[i].disabled = true;
+            } else if(otherChoices[i].id ==="answerChoices"){
+                otherChoices[i].style.backgroundColor = "green";
+                otherChoices[i].disabled = true;
+            }    
+        }
     }
+      
+    
+   })
+      
+      
+})
+  
 
 
 
 
-questionSelection();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

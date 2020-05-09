@@ -29,9 +29,9 @@ body{
     color: white;
 }
 
-#cardOne, #cardTwo{
-    width: 100%;
-   margin: 0auto;
+.cardDiv{
+    width: 40%;
+   margin: 0 auto;
 }
 
 #introductory-page{
@@ -61,9 +61,10 @@ h1{
     width: 10em;
     height: 10em;
     background-color: orange;
-    border-radius: 100%;
+    border-radius: 0%;
     z-index: 2;
     padding: 1em;
+    opacity: .8;
 }
 
 h3{ font-size: 2em;
@@ -119,3 +120,5 @@ position: relative;
 left: 40%;
 top: 60%;
 }
+
+

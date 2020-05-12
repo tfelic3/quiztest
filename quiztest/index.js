@@ -72,7 +72,7 @@ const questionFour ={
 }
 
 const questionFive ={
-    question: 'Kevin Hassett said working in the West Wing may be risky during to coronavirus pandemic. What position does he hold?',
+    question: 'Kevin Hassett said working in the West Wing may be risky during the coronavirus pandemic. What position does he hold?',
     imgPath: "images/kevinhassett.png",
     questionKeys:[{keyOne: "Secretary of Defense"},{keyTwo:"Secretary of Labor"},{keyThree:"Senior Economic Advisor"},{keyFour:"Vice President"}],
     correctChoice: "Senior Economic Advisor" 

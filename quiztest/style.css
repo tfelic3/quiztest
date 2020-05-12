@@ -6,27 +6,25 @@
   }
   
 body{
-    background-color: black;
-    font-family: 'Oswald', sans-serif;
-    font-size: .9em;
+    background-color: white;
+    font-family: Georgia, sans-serif;
     font-weight: normal;
-    word-spacing: 0.1em;
-    letter-spacing: .1em;
+
     line-height: 1.2;
 }
 
 .quiz-container{
     width: 50%;
-    background-color: black;
+    background-color:;
     margin: 0 auto;
 }
 
 .quiz-container p{
     position: relative;
     top: 50%;
-    font-size: 2em;
+    font-size: 1em;
     text-align: center;
-    color: white;
+    color: black;
 }
 
 .cardDiv{
@@ -43,34 +41,40 @@ h1{
     position: relative;
     top: 45%;
     text-align: center;
-    color: white;
+    color: black;
     
 }
-
+p{
+font-size:1em;
+}
 
 #score-container h3{
     text-align: center;  
     position: relative;
-    top: .5em;  
+    top: .4em;  
     color: black;  
+    
 }
 
 #score-container{
     position: fixed;
-    top: 4em;
-    width: 10em;
-    height: 10em;
-    background-color: orange;
+    top: 6em;
+    left: 30%;
+    width: 8em;
+    height: 8em;
+    background-color: rgb(173, 194, 211);
     border-radius: 0%;
     z-index: 2;
     padding: 1em;
     opacity: .8;
 }
 
-h3{ font-size: 2em;
-    color: white;
+h3{ font-size: 1.5em;
+    color: black;
     text-align: left;
-    line-height: 1.5em;
+    font-weight: normal;
+    margin-bottom:.8em;
+    margin-top: .8em;
 }
 
 
@@ -82,25 +86,29 @@ h3{ font-size: 2em;
 
 button{
     width: 100%;
-    height: 1.5em;
+    height: 2em;
     float: left;
-    font-size: 2em;
-    color: white;
-    background-color:black;
+    font-size: 1.45em;
+    font: Georgia;
+    align:left;
+    color: black;
+    background-color: gray;
    margin: 0 auto;
     border-radius: 5px;
     margin-top: .2em;
+     background-color: rgb(173, 194, 211);
+    
 }
 
 button:hover{
-    background-color: gray;
     transition: background-color .15s, font-size .15s;
     cursor: pointer;
+   background-color: rgb(211,211,211);
 }
 
 .answerKey{
-  font-size: 3em;
-  color: white;
+  font-size: 1em;
+  color: black;
 }
 
 .score{

@@ -6,8 +6,7 @@ let introduction = document.querySelector('#introduction');
 let pageIntro = document.querySelector('#introductory-page');
 //Selecting intro div page. Will delete this later
 
-let modal = document.querySelector(".modal");
-console.log(modal)
+
 let score = document.querySelector('#score-container');
 
 let scoreTag = document.querySelector('.score-tag')
@@ -20,8 +19,9 @@ scoreTag.insertAdjacentElement('beforeend', scoreContainer);
 let scoreValue= 0 ;
 let scoreHandle = () =>{
 score.style.visibility = "visible";
-scoreValue++;
+++scoreValue;
 scoreContainer.textContent = scoreValue;
+/*
 if(scoreValue===3){
  score.style.height= "100vh"; 
  score.style.width = "100vh";
@@ -30,6 +30,7 @@ if(scoreValue===3){
  score.border.borderRadius = "none";
 
 }
+*/
 }
 
 let currentIndex = 0;
@@ -39,18 +40,18 @@ let questionButtons
 
 //Objects quiz questions
 const questionOne = {
-question: "Democratic presidential candidate and former Vice President Joe Biden said he believes this state’s primary “could be done” despite coronavirus fears.",
-imgPath: 'images/joebiden.png',                 
+question: "Democratic presidential candidate and former Vice President Joe Biden said he believed this state’s primary “could be done” despite coronavirus fears.",
+imgPath: 'images/joebiden.png',            
 questionKeys:[{keyOne:"Louisiana"},{keyTwo: "Mississippi"},{keyThree: "Delaware"}, {correctChoice: "Wisconsin"}],
 correctChoice: "Wisconsin",
 audioSelection: new Audio('images/bidenaudio.m4a')
 }
 
 const questionTwo ={
- question: "This governor is reopening the state on Friday April 23.",
+ question: "Gov. Brian Kemp ordered this state to begin a phased reopening on April 23.",
  imgPath: 'images/kemp.png',
- questionKeys: [{keyOne:"Gov. Edwards"},{keyTwo:"Gov. Kemp"},{keyThree:"Gov Cuomo"},{keyFour:"Gov. Jindal"}],
- correctChoice: "Gov. Kemp",
+ questionKeys: [{keyOne:"Georgia"},{keyTwo:"Arkansas"},{keyThree:"New York"},{keyFour:"Mississippi"}],
+ correctChoice: "Georgia",
  audioSelection: new Audio('images/kempaudio.m4a')
 }
 
@@ -62,12 +63,27 @@ correctChoice: "Bat",
 audioSelection: new Audio('images/kempaudio.m4a')
 }
 
+const questionFour ={
+    question: 'This public official began a "modified quarantine" after coming into contact with a White House staffer who tested positive for the coronavirus.',
+    imgPath: 'images/test.png',
+    imgPath2: "images/anthonyfauci.png",
+    questionKeys:[{keyOne: "Stephen Miller"},{keyTwo:"Anthony Fauci"},{keyThree:"Donald Trump"},{keyFour:"Mike Pence"}],
+    correctChoice: "Anthony Fauci" 
+}
+
+const questionFive ={
+    question: 'Kevin Hassett said working in the West Wing may be risky during to coronavirus pandemic. What position does he hold?',
+    imgPath: "images/kevinhassett.png",
+    questionKeys:[{keyOne: "Secretary of Defense"},{keyTwo:"Secretary of Labor"},{keyThree:"Senior Economic Advisor"},{keyFour:"Vice President"}],
+    correctChoice: "Senior Economic Advisor" 
+}
+
 
 //Function for selecting questions in object
 let questionSelection = () =>{
     
 
-let questionChoices = [questionOne, questionTwo, questionThree];
+let questionChoices = [questionOne, questionTwo, questionThree, questionFour, questionFive];
 
 function shuffle(){
     let currentPass = questionChoices.length;
@@ -103,6 +119,7 @@ questionChoices.forEach(question=>{
    createQuestion.textContent = question.question;
    let buttonDiv = document.createElement('div');
    buttonDiv.classList.add("buttonBox");
+   
 
    let correctHandle= () =>{
    let correctDiv = document.createElement("p");
@@ -127,6 +144,7 @@ questionChoices.forEach(question=>{
        }
        buttonDiv.appendChild(questionButtons);
        questionButtons=document.querySelectorAll('button')
+       
    })
      
  
@@ -139,31 +157,68 @@ questionSelection();
 
 
 
+
 let buttonContainer = document.querySelectorAll('.buttonBox')
 
-
-let buttonHandler = (e)=>{
-
+let counter = 0;
+let functionCounter = ()=>{
+    counter++;
+    if(counter === 5 && scoreValue ===1){
+        console.log("Want to try again?")
+        } else if (counter ===5 && scoreValue ===2){
+        console.log("Try again")
+    } else if(counter ===5 && scoreValue ===3){
+        console.log("You did a bit better")
+    } else if (counter ===5 && scoreValue===4){
+        console.log("You did great")
+    } else if (counter ===5 && scoreValue ===5){
+        console.log("Outstanding performance");
+    }
 }
+
+questionTwo.audioSelection.play()
 
 
 buttonContainer.forEach(div=>{
    div.addEventListener('click', function(e){
     if (e.target.id ==="answerChoices"){
-        e.target.style.backgroundColor ="green";
-       console.log(e);
+        e.target.style.backgroundColor ="green";  
+        if(e.target.textContent==="Anthony Fauci"){
+            console.log(questionFour.imgPath2);
+            let imageChange= div.previousElementSibling.previousElementSibling; 
+            imageChange.src=questionFour.imgPath2; 
+        }
+        if(e.target.textContent==="Georgia"){
+            questionTwo.audioSelection.play()
+        } else{
+            questionTwo.audioSelection.pause()
+        }
+        console.log(window.length);
         scoreHandle ();
+        functionCounter();
         e.target.disabled ="true";
         let correctDiv = document.createElement('p');
         correctDiv.style.color = "green";
         correctDiv.style.textAlign ="center";
+        correctDiv.style.fontSize = "1.5em"
         correctDiv.textContent = ("You got it right!");
         div.insertAdjacentElement("beforebegin",correctDiv);
         let otherChoices = div.childNodes;
         otherChoices.forEach(choice=>{choice.disabled = "true";})
         
+        
+        
     } else{
-       
+        questionTwo.audioSelection.pause()
+        let content = div.childNodes;
+        for(let j=0;j<content.length;j++){
+            if(content[j].textContent==="Anthony Fauci"){
+                let imageChange= div.previousElementSibling.previousElementSibling; 
+                imageChange.src=questionFour.imgPath2;  
+            };
+        }
+
+        functionCounter();
         otherChoices = div.childNodes;
        for(let i=0; i<otherChoices.length;i++){
            if(otherChoices[i].id ==="answerChoices"){
@@ -171,7 +226,8 @@ buttonContainer.forEach(div=>{
                let wrongDiv = document.createElement('p');
                wrongDiv.style.color = "green";
                wrongDiv.style.textAlign ="center";
-               wrongDiv.textContent = "The correct answer is " + correctChoice;
+               wrongDiv.style.fontSize = "1.5em";
+               wrongDiv.textContent = "The correct answer is " + correctChoice+".";
            div.insertAdjacentElement("beforebegin",wrongDiv);
             }
            
@@ -184,6 +240,7 @@ buttonContainer.forEach(div=>{
             
         if (otherChoices[i].id !=="answerChoices"){
             otherChoices[i].style.backgroundColor ="red";
+            otherChoices[i].style.opacity = ".2";
             otherChoices[i].disabled = true;
             } else if(otherChoices[i].id ==="answerChoices"){
                 otherChoices[i].style.backgroundColor = "green";
@@ -198,36 +255,6 @@ buttonContainer.forEach(div=>{
       
 })
   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

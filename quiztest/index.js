@@ -164,15 +164,16 @@ let counter = 0;
 let functionCounter = ()=>{
     counter++;
     if(counter === 5 && scoreValue ===1){
-        console.log("Want to try again?")
+        alert("Want to try again?")
         } else if (counter ===5 && scoreValue ===2){
-        console.log("Try again")
+        alert("Try again please.")
     } else if(counter ===5 && scoreValue ===3){
-        console.log("You did a bit better")
+        alert("You did a bit better")
     } else if (counter ===5 && scoreValue===4){
-        console.log("You did great")
+        alert("You did great")
     } else if (counter ===5 && scoreValue ===5){
-        console.log("Outstanding performance");
+    alert("Outstanding! You must be a genius.");
+    
     }
 }
 

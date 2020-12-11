@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/cabinet-test/static/css/main.8832895e.chunk.css",
+    "main.js": "/cabinet-test/static/js/main.31aca7fc.chunk.js",
+    "main.js.map": "/cabinet-test/static/js/main.31aca7fc.chunk.js.map",
+    "runtime-main.js": "/cabinet-test/static/js/runtime-main.fc90e769.js",
+    "runtime-main.js.map": "/cabinet-test/static/js/runtime-main.fc90e769.js.map",
+    "static/css/2.43b2b750.chunk.css": "/cabinet-test/static/css/2.43b2b750.chunk.css",
+    "static/js/2.2000d649.chunk.js": "/cabinet-test/static/js/2.2000d649.chunk.js",
+    "static/js/2.2000d649.chunk.js.map": "/cabinet-test/static/js/2.2000d649.chunk.js.map",
+    "index.html": "/cabinet-test/index.html",
+    "static/css/2.43b2b750.chunk.css.map": "/cabinet-test/static/css/2.43b2b750.chunk.css.map",
+    "static/css/main.8832895e.chunk.css.map": "/cabinet-test/static/css/main.8832895e.chunk.css.map",
+    "static/js/2.2000d649.chunk.js.LICENSE.txt": "/cabinet-test/static/js/2.2000d649.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/cabinet-test/static/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fc90e769.js",
+    "static/css/2.43b2b750.chunk.css",
+    "static/js/2.2000d649.chunk.js",
+    "static/css/main.8832895e.chunk.css",
+    "static/js/main.31aca7fc.chunk.js"
+  ]
+}
